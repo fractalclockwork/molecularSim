@@ -1,9 +1,14 @@
-
 # Molecular Simulation of Fluids 
 
-Based on text and source for:
-Molecular Simulation of Fluids: Theory, Algorithms, Object-Orientation, and Parallel Computing, 2nd Edition 
-by Richard J. Sadus
+Based on text and source from:
+Molecular Simulation of Fluids: Theory, Algorithms, Object-Orientation, and Parallel Computing, 2nd Edition by Richard J. Sadus
+
+This project containerizes the build and runtime environment for all examples.
+
+To use:
+```
+
+```
 
 \[
 \begin{array}{|l|l|l|}
