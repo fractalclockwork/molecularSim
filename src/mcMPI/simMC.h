@@ -9,9 +9,10 @@
 
 #include "mc.h"
 
-class Simulation{
+class Simulation {
   private:
-     MonteCarlo *mc;
+    MonteCarlo* mc;
+
   public:
     void readSimParameters();
 };

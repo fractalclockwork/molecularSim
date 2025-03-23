@@ -7,14 +7,14 @@
 #ifndef _simMCMD_h_
 #define _simMCMD_h_
 
-#include "md.h"
 #include "mc.h"
+#include "md.h"
 
-class Simulation
-{
+class Simulation {
   private:
-    MolecularDynamics *md;
-    MonteCarlo *mc;
+    MolecularDynamics* md;
+    MonteCarlo* mc;
+
   public:
     void readSimParameters();
 };

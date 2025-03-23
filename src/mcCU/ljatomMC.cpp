@@ -1,5 +1,5 @@
 // File: ljatomMC.cpp
-// ------------------ 
+// ------------------
 // File containing the functions to implement the
 // LJatom class.
 
@@ -26,27 +26,20 @@
 // atomicSigma[0][1] = the sigma value for interactions between an
 // atom of type 0 and an atom of type 1, and so on, likewise
 // for atomicEpsilon
-	
 
 // Method: setEpsilon
 // Usage: setEpsilon(double **)
-// ---------------------------- 
+// ----------------------------
 // Assign values of LJ epsilon parameter
 
-void LJatom::setEpsilon(double **newEpsilon)
-{
-  epsilon = newEpsilon;
-}
+void LJatom::setEpsilon(double** newEpsilon) { epsilon = newEpsilon; }
 
 // Method: setSigma
 // Usage: setSigma(double **);
-// --------------------------- 
+// ---------------------------
 // Set the LJ parameter Sigma
 
-void LJatom::setSigma(double **newSigma)
-{
-  sigma = newSigma;
-}
+void LJatom::setSigma(double** newSigma) { sigma = newSigma; }
 
 // Methods:  getEpsilon and getSigma
 // Usage:    n = getEpsilon();  (or)
@@ -57,41 +50,29 @@ void LJatom::setSigma(double **newSigma)
 
 // Method: getEpsilon
 // Usage: n = getEpsilon();
-// ------------------------ 
+// ------------------------
 // Get values of the Lennard-Jones epsilon parameter.
 
-double **LJatom::getEpsilon()
-{
-  return epsilon;
-}
+double** LJatom::getEpsilon() { return epsilon; }
 
 // Method: getSigma
 // Usage: n = getSigma();
-// ---------------------- 
+// ----------------------
 // Get values of the Lennard-Jones sigma parameter.
 
-double **LJatom::getSigma()
-{
-  return sigma;
-}
+double** LJatom::getSigma() { return sigma; }
 
 // Constructor: LJatom
 // Usage: LJatom atom;
-// ------------------- 
+// -------------------
 // Builds the LJatom class
 
-LJatom::LJatom(int theType, double theMass, double **ep,
-		double **sig, double **rC, int dimensions, int numAtoms)
-       :Atom(theType, theMass, dimensions, numAtoms)
-{
-  epsilon = ep;
-  sigma = sig;
-  rCutOff = rC;
+LJatom::LJatom(int theType, double theMass, double** ep, double** sig, double** rC, int dimensions,
+               int numAtoms)
+    : Atom(theType, theMass, dimensions, numAtoms) {
+    epsilon = ep;
+    sigma = sig;
+    rCutOff = rC;
 }
 
-LJatom::LJatom()
-{
-}
-
-
-
+LJatom::LJatom() {}

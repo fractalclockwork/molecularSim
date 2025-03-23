@@ -2,7 +2,7 @@
 // ----------------
 // File containing functions to implement the abstract
 // Energy class.
- 
+
 // This code was specifically developed to illustrate concepts in the accompanying book:
 // R. J. Sadus, "Molecular Simulation of Fluids: Theory, Algorithms, Object-Orientation,
 // and Parallel Computing," 2nd Ed. (Elsevier, Amsterdam, 2023). It can be used freely for
@@ -11,17 +11,14 @@
 // Check the book's website for any subsequent updates.
 
 #include "energyMC.h"
- 
+
 // constructor
-// Method: Energy  
+// Method: Energy
 // Usage:   n = Energy(atoms);
 // --------------------------
 // Used to construct the force component of any derived energy classes.
 
-Energy::Energy(Atom **theAtoms)
-{
-  atoms = theAtoms;
-}
+Energy::Energy(Atom** theAtoms) { atoms = theAtoms; }
 
 // destructor
-Energy::~Energy(){}
+Energy::~Energy() {}

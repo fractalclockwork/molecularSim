@@ -22,19 +22,18 @@ using namespace std;
 // -----------------------------
 // Reads in parameters for NVE ensemble
 
-void Simulation::readSimParameters()
-{
-  int simulation;
-  // open the simMC.dat file
-/*
-  ifstream in;
-  in.open("simMC.dat");
+void Simulation::readSimParameters() {
+    int simulation;
+    // open the simMC.dat file
+    /*
+      ifstream in;
+      in.open("simMC.dat");
 
-  if(in.fail()){
-	 cout << "Cannot open simMC.dat!\n";
-	 return;
-  }
-*/
+      if(in.fail()){
+             cout << "Cannot open simMC.dat!\n";
+             return;
+      }
+    */
 
     // Use the DATA_PATH macro defined in CMake
     string dataPath = string(DATA_PATH) + "/simMC.dat";
@@ -45,23 +44,19 @@ void Simulation::readSimParameters()
     if (in.fail()) {
         cout << "Cannot open " << dataPath << "!\n";
         return;
-    }   
+    }
 
+    in >> simulation;
+    in.close();
 
-
-  in >> simulation;
-  in.close();
-
-  switch(simulation)
-  {
-    case 2:  //Monte Carlo
+    switch (simulation) {
+    case 2: // Monte Carlo
         mc = new MonteCarlo();
-        mc->run(); 		
-	break;
+        mc->run();
+        break;
     default:
-	cout << "Invalid simulation selected!  Aborting" << endl;
-	break;
-  }
-  return;
+        cout << "Invalid simulation selected!  Aborting" << endl;
+        break;
+    }
+    return;
 }
-

@@ -1,5 +1,5 @@
 // File: ljatomMC.cpp
-// ------------------ 
+// ------------------
 // File containing the functions to implement the
 // LJatom class.
 
@@ -7,7 +7,7 @@
 // R. J. Sadus, "Molecular Simulation of Fluids: Theory, Algorithms, Object-Orientation,
 // and Parallel Computing," 2nd Ed. (Elsevier, Amsterdam, 2023). It can be used freely for
 // any not for profit purpose or academic research application. The code has been validated,
-// but it would be nonetheless prudent to test it further before publishing any results. 
+// but it would be nonetheless prudent to test it further before publishing any results.
 // Check the book's website for any subsequent updates.
 
 #include "ljatomMC.h"
@@ -26,27 +26,20 @@
 // atomicSigma[0][1] = the sigma value for interactions between an
 // atom of type 0 and an atom of type 1, and so on, likewise
 // for atomicEpsilon
-	
+
 // Method: setEpsilon
 // Usage: setEpsilon(double **)
-// ---------------------------- 
+// ----------------------------
 // Assign values of LJ epsilon parameter
 
-void LJatomMC::setEpsilon(double **newEpsilon)
-{
-  epsilon = newEpsilon;
-}
+void LJatomMC::setEpsilon(double** newEpsilon) { epsilon = newEpsilon; }
 
 // Method: setSigma
 // Usage: setSigma(double **);
-// --------------------------- 
+// ---------------------------
 // Set the LJ parameter Sigma
 
-void LJatomMC::setSigma(double **newSigma)
-{
-  sigma = newSigma;
-}
-
+void LJatomMC::setSigma(double** newSigma) { sigma = newSigma; }
 
 // Methods:  getEpsilon and getSigma
 // Usage:    n = getEpsilon();  (or)
@@ -57,41 +50,29 @@ void LJatomMC::setSigma(double **newSigma)
 
 // Method: getEpsilon
 // Usage: n = getEpsilon();
-// ------------------------ 
+// ------------------------
 // Get values of the Lennard-Jones epsilon parameter.
 
-double **LJatomMC::getEpsilon()
-{
-  return epsilon;
-}
+double** LJatomMC::getEpsilon() { return epsilon; }
 
 // Method: getSigma
 // Usage: n = getSigma();
-// ---------------------- 
+// ----------------------
 // Get values of the Lennard-Jones sigma parameter.
 
-double **LJatomMC::getSigma()
-{
-  return sigma;
-}
+double** LJatomMC::getSigma() { return sigma; }
 
 // Constructor: LJatom
 // Usage: LJatom atom;
-// ------------------- 
+// -------------------
 // Builds the LJatom class
 
-LJatomMC::LJatomMC(int theType, double theMass, double **ep,
-		double **sig, double **rC, int dimensions)
-       :AtomMC(theType, theMass, dimensions)
-{
-  epsilon = ep;
-  sigma = sig;
-  rCutOff = rC;
+LJatomMC::LJatomMC(int theType, double theMass, double** ep, double** sig, double** rC,
+                   int dimensions)
+    : AtomMC(theType, theMass, dimensions) {
+    epsilon = ep;
+    sigma = sig;
+    rCutOff = rC;
 }
 
-LJatomMC::LJatomMC()
-{
-}
-
-
-
+LJatomMC::LJatomMC() {}

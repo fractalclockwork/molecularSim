@@ -6,24 +6,21 @@
 #ifndef _nveMC_h
 #define _nveMC_h
 
-
 #include "ensembleMC.h"
 
-class NVEensembleMC : public EnsembleMC
-{
+class NVEensembleMC : public EnsembleMC {
   private:
-    double energyLRC;    // long range energy correction
+    double energyLRC; // long range energy correction
   public:
-    NVEensembleMC(AtomMC **, int, int, double,
-	 double, double *, int *);// ensemble constructor
-    void readInNVE();                   // read in ensemble data
-    virtual void initialCoord();        //place atoms on lattice
+    NVEensembleMC(AtomMC**, int, int, double, double, double*, int*); // ensemble constructor
+    void readInNVE();                                                 // read in ensemble data
+    virtual void initialCoord();                                      // place atoms on lattice
 
-    virtual double getTrialPotE(int, AtomMC **);
+    virtual double getTrialPotE(int, AtomMC**);
     virtual void reSetEnergy(double);
-    virtual void setEnergy();           // Order N*N energy calculation
-    virtual double getEnergyLRC();      // get energy long range correction
-    virtual void lrc();                 // trigger the long range corrections
+    virtual void setEnergy();      // Order N*N energy calculation
+    virtual double getEnergyLRC(); // get energy long range correction
+    virtual void lrc();            // trigger the long range corrections
 };
 
 #endif

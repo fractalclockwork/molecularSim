@@ -11,23 +11,19 @@
 
 #include "atomMD.h"
 
-class Force
-{
+class Force {
   protected:
-    Atom **atoms; 	                //reference to the array of atoms
+    Atom** atoms; // reference to the array of atoms
   public:
-    Force(Atom **);                               //constructor for Force
-    virtual ~Force();                             //destructor for Force
- 
+    Force(Atom**);    // constructor for Force
+    virtual ~Force(); // destructor for Force
+
     // Abstract Methods
     // ----------------
     // abstract methods for subclasses
     // for LJforce
-    virtual void setForce(int, double, 
-			double *, double *) = 0;  //set force calculations
-    virtual void lrc(int, int *, double,
-			double *, double *) = 0;  //long range corrections
+    virtual void setForce(int, double, double*, double*) = 0;  // set force calculations
+    virtual void lrc(int, int*, double, double*, double*) = 0; // long range corrections
 };
 
 #endif
-

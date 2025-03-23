@@ -7,18 +7,18 @@
 #ifndef _mc_h_
 #define _mc_h_
 
-
 #include "ensembleMC.h"
 #include "ljatomMC.h"
 
-class MonteCarlo
-{
+class MonteCarlo {
   private:
-    AtomMC ** atom;
-    EnsembleMC *ensemble;
+    AtomMC** atom;
+    EnsembleMC* ensemble;
     int theEnsemble;
+
   protected:
     int nSize, nEquil, nStep;
+
   public:
     MonteCarlo();
     int getnSize();
@@ -30,4 +30,3 @@ class MonteCarlo
 };
 
 #endif
-

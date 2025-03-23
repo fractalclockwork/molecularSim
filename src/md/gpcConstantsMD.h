@@ -1,7 +1,7 @@
 // File:  gpcConstantsMD.h
 // -----------------
 // This file contains the constants required for the Gear-Predictor method.
-// 
+//
 //
 #ifndef _gpcConstantsMD_h_
 #define _gpcConstantsMD_h_
@@ -13,4 +13,3 @@ const double G4 = 0.1666666667;
 const double G5 = 0.0166666667;
 
 #endif
-

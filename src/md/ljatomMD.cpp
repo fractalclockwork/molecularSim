@@ -1,5 +1,5 @@
 // File: ljatomMD.cpp
-// ------------------ 
+// ------------------
 // File containing the functions to implement the
 // LJatom class.
 
@@ -7,7 +7,7 @@
 // R. J. Sadus, "Molecular Simulation of Fluids: Theory, Algorithms, Object-Orientation,
 // and Parallel Computing," 2nd Ed. (Elsevier, Amsterdam, 2023). It can be used freely for
 // any not for profit purpose or academic research application. The code has been validated,
-// but it would be nonetheless prudent to test it further before publishing any results. 
+// but it would be nonetheless prudent to test it further before publishing any results.
 // Check the book's website for any subsequent updates.
 
 #include "ljatomMD.h"
@@ -29,23 +29,17 @@
 
 // Method: setEpsilon
 // Usage: setEpsilon(atomicEpsilon)
-// -------------------------------- 
+// --------------------------------
 // Assign values of LJ epsilon parameter
 
-void LJatom::setEpsilon(double **newEpsilon)
-{
-  epsilon = newEpsilon;
-}
+void LJatom::setEpsilon(double** newEpsilon) { epsilon = newEpsilon; }
 
 // Method: setSigma
 // Usage: setSigma(atomicSigma);
-// ----------------------------- 
+// -----------------------------
 // Set the LJ parameter Sigma
 
-void LJatom::setSigma(double **newSigma)
-{
-  sigma = newSigma;
-}
+void LJatom::setSigma(double** newSigma) { sigma = newSigma; }
 
 // Methods:  getEpsilon and getSigma
 // Usage:    n = getEpsilon();  or
@@ -56,36 +50,29 @@ void LJatom::setSigma(double **newSigma)
 
 // Method: getEpsilon
 // Usage: n = getEpsilon();
-// ------------------------ 
+// ------------------------
 // Get values of the Lennard-Jones epsilon parameter.
 
-double **LJatom::getEpsilon()
-{
-  return epsilon;
-}
+double** LJatom::getEpsilon() { return epsilon; }
 
 // Method: getSigma
 // Usage: n = getSigma();
 // ----------------------
 // Get values of the Lennard-Jones sigma parameter.
 
-double **LJatom::getSigma()
-{
-  return sigma;
-}
+double** LJatom::getSigma() { return sigma; }
 
 // Constructor: LJatom
 // Usage: LJatom atom;
-// ------------------- 
+// -------------------
 // Builds the LJatom class
 
-LJatom::LJatom(int theType, double theMass, double **ep,
-double **sig, double **rC, int dimensions, int derivatives)
-:Atom(theType, theMass, dimensions, derivatives)
-{
-  epsilon = ep;
-  sigma = sig;
-  rCutOff = rC;
+LJatom::LJatom(int theType, double theMass, double** ep, double** sig, double** rC, int dimensions,
+               int derivatives)
+    : Atom(theType, theMass, dimensions, derivatives) {
+    epsilon = ep;
+    sigma = sig;
+    rCutOff = rC;
 }
 
-LJatom::LJatom(){}
+LJatom::LJatom() {}

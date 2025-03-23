@@ -11,53 +11,45 @@
 // Check the book's website for any subsequent updates.
 
 #include "ensembleMD.h"
-#include <math.h>
 #include <iostream>
+#include <math.h>
 
 using namespace std;
 
 // setMethods
 // ----------
-// These methods assign values to the volume, length, and component number 
+// These methods assign values to the volume, length, and component number
 // for the ensemble.  They do not take any parameters, and are caled
 // during the construction phase of the ensemble
 
 // Method: setVolume
 // Usage: setVolume();
-// ------------------- 
+// -------------------
 // Determines the volume of the simulation box.
 
-void Ensemble::setVolume()
-{
-  boxVol = numAtom/density;
-}
+void Ensemble::setVolume() { boxVol = numAtom / density; }
 
 // Method: setLength
 // Usuage: setLength();
 // --------------------
 // Determines the length of the simulation box.
 
-void Ensemble::setLength()
-{
-  boxLen = pow(boxVol, 1.0/3.0);
-}
+void Ensemble::setLength() { boxLen = pow(boxVol, 1.0 / 3.0); }
 
 // Method: setComp();
 // Usage: setComp();
-// ------------------ 
+// ------------------
 // Determines the number of atoms of each type.
- 
-void Ensemble::setComp()
-{
-  int i, sum = 0;
 
-  for(i =0; i < numComp - 1; i++)
-  {
-    comp[i] = (int)(molFract[i] * numAtom);
-    sum += comp[i];
-  }
+void Ensemble::setComp() {
+    int i, sum = 0;
 
-  comp[numComp - 1] = numAtom - sum;
+    for (i = 0; i < numComp - 1; i++) {
+        comp[i] = (int)(molFract[i] * numAtom);
+        sum += comp[i];
+    }
+
+    comp[numComp - 1] = numAtom - sum;
 }
 
 // getMethods
@@ -70,103 +62,73 @@ void Ensemble::setComp()
 
 // Method: getNumAtom
 // Usage: n = getNumAtom();
-// ------------------------ 
+// ------------------------
 // Gets the total number of molecules in the ensemble.
 
-int Ensemble::getNumAtom()
-{
-  return numAtom;
-}
+int Ensemble::getNumAtom() { return numAtom; }
 
 // Method: getTemp
 // Usage: getTemp();
-// ----------------- 
+// -----------------
 // Gets the temperature of the ensemble.
 
-double Ensemble::getTemp()
-{
-  return temperature;
-}
+double Ensemble::getTemp() { return temperature; }
 
 // Method: getNumComp
 // Usage: n = getNumComp();
-// ------------------------ 
+// ------------------------
 // Gets the number of components in the ensemble.
 
-int Ensemble::getNumComp()
-{
-  return numComp;
-}
+int Ensemble::getNumComp() { return numComp; }
 
 // Method: getComp
 // Usage: p = getComp();
-// --------------------- 
+// ---------------------
 // Gets the number of each individual component.
 
-int * Ensemble::getComp()
-{
-  return comp;
-}
+int* Ensemble::getComp() { return comp; }
 
 // Method: getVolume
 // Usage: getVolume();
-// ------------------- 
+// -------------------
 // Gets the volume of the simulation box.
 
-double Ensemble::getVolume()
-{
-  return boxVol;
-}
+double Ensemble::getVolume() { return boxVol; }
 
 // Method: getLength
 // Usage: getLength();
-// ------------------- 
+// -------------------
 // Gets the length of the simulation box.
 
-double Ensemble::getLength()
-{
-  return boxLen;
-}
+double Ensemble::getLength() { return boxLen; }
 
 // Method: getPotEnergy
 // Usage: getPotEnergy();
-// ---------------------- 
+// ----------------------
 // Gets potential energy following force calculation.
 
-double Ensemble::getPotEnergy()
-{
-  return potEnergy;
-}
+double Ensemble::getPotEnergy() { return potEnergy; }
 
 // Method: getVirial
 // Usage: getVirial();
-// ------------------- 
+// -------------------
 // Gets virial following force calculation.
 
-double Ensemble::getVirial()
-{
-  return virial;
-}
+double Ensemble::getVirial() { return virial; }
 
 // Method: getKineticE
 // Usage n = getKineticE();
 // ------------------------
 // Gets the kinetic energy.
 
-double Ensemble::getKineticE()
-{
-  return kineticE;
-}
+double Ensemble::getKineticE() { return kineticE; }
 
 // Method: getAtoms
 // Usage: n = getAtoms();
-// ---------------------- 
+// ----------------------
 // Return array of atoms
 
-Atom **Ensemble::getAtoms()
-{
-  return atoms;
-}
+Atom** Ensemble::getAtoms() { return atoms; }
 
 // Method:  initAcceleration
 // Usage:   initAcceleration();
@@ -175,43 +137,40 @@ Atom **Ensemble::getAtoms()
 // in the ensemble prior to starting the simulation.
 // Requires the force values to have been initialised.
 
-void  Ensemble::initAcceleration()
-{
-  int k;
-  double *accel, mass;
+void Ensemble::initAcceleration() {
+    int k;
+    double *accel, mass;
 
-  accel = new double [3];
+    accel = new double[3];
 
-  for(int i = 0; i < numAtom; i++)
-  {
-    k = 3*i;
-    mass = atoms[i]->getMass();
+    for (int i = 0; i < numAtom; i++) {
+        k = 3 * i;
+        mass = atoms[i]->getMass();
 
-    for (int j = 0; j < 3; j++)
-      accel[j] = atoms[0]->f[k + j]/mass;
+        for (int j = 0; j < 3; j++)
+            accel[j] = atoms[0]->f[k + j] / mass;
 
-    atoms[i]->setAcceleration(&accel[0]);
-  }
+        atoms[i]->setAcceleration(&accel[0]);
+    }
 }
 
 // Method: Ensemble
 // Usage: Ensemble;
-// ---------------- 
+// ----------------
 // Constructor for the Ensemble class
 
-Ensemble::Ensemble(Atom **theAtoms, int nComp, int nAtoms,
-	double temp, double dens, double *mol, int *cmp)
-{
-  atoms = theAtoms;
-  numComp = nComp;
-  numAtom = nAtoms;
-  temperature = temp;
-  density = dens;
-  molFract = mol;
-  comp = cmp;
-  potEnergy = 0.0;
-  virial = 0.0;
+Ensemble::Ensemble(Atom** theAtoms, int nComp, int nAtoms, double temp, double dens, double* mol,
+                   int* cmp) {
+    atoms = theAtoms;
+    numComp = nComp;
+    numAtom = nAtoms;
+    temperature = temp;
+    density = dens;
+    molFract = mol;
+    comp = cmp;
+    potEnergy = 0.0;
+    virial = 0.0;
 }
 
 // Destructor for Ensemble class
-Ensemble::~Ensemble(){}
+Ensemble::~Ensemble() {}

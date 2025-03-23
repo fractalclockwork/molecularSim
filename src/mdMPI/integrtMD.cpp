@@ -1,6 +1,6 @@
 // File:  intergrtMD.cpp
 // Class: Integrator
- 
+
 // This code was specifically developed to illustrate concepts in the accompanying book:
 // R. J. Sadus, "Molecular Simulation of Fluids: Theory, Algorithms, Object-Orientation,
 // and Parallel Computing," 2nd Ed. (Elsevier, Amsterdam, 2023). It can be used freely for
@@ -12,13 +12,10 @@
 
 // Constructor
 // -----------
- 
-Integrator::Integrator(Atom **theAtoms)
-{
-  atoms = theAtoms;
-}
+
+Integrator::Integrator(Atom** theAtoms) { atoms = theAtoms; }
 
 // Destructor
 // ----------
- 
-Integrator::~Integrator(){}
+
+Integrator::~Integrator() {}

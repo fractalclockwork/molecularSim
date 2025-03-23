@@ -1,5 +1,5 @@
 // File: atomMD.cpp
-// ---------------- 
+// ----------------
 // File containing the method bodies to implement the
 // atom class.
 
@@ -9,11 +9,11 @@
 // any not for profit purpose or academic research application. The code has been validated,
 // but it would be nonetheless prudent to test it further before publishing any results.
 // Check the book's website for any subsequent updates.
- 
+
 #include "atomMD.h"
 #include "auxfunc.h"
-#include <iostream>
 #include <fstream>
+#include <iostream>
 #include <math.h>
 
 // Method:  setType
@@ -22,10 +22,7 @@
 //  Used to identify the atom as belonging to a certain
 //  _type_ of component within the ensemble
 
-void Atom::setType(int t)
-{
-  type = t;
-}
+void Atom::setType(int t) { type = t; }
 
 // Method: setrCutOff
 // Usage:  setrCutOff(double **atomic_rCutOffValue);
@@ -33,20 +30,14 @@ void Atom::setType(int t)
 // Used to assign the values for the rCutOffs for the various
 // atom types that make up the ensemble
 
-void Atom::setrCutOff(double **newrCut)
-{
-  rCutOff = newrCut;
-}
+void Atom::setrCutOff(double** newrCut) { rCutOff = newrCut; }
 
 // Method:  setMass
 // Usage:   setMass(double atomicMass);
 // ------------------------------------
 // Assign the mass of the atom
 
-void Atom::setMass(double newMass)
-{
-  mass = newMass;
-}
+void Atom::setMass(double newMass) { mass = newMass; }
 
 // Method:  setAcceleration
 // Usage:   setAcceleration(double *atomicAcceleration);
@@ -64,10 +55,9 @@ void Atom::setMass(double newMass)
 // take on the values in the array, but the address of the
 //  array itself.
 
-void Atom::setAcceleration(double *newAccel)
-{
-   for(int i = 0; i < 3; i++)
-     acceleration[i] = newAccel[i];
+void Atom::setAcceleration(double* newAccel) {
+    for (int i = 0; i < 3; i++)
+        acceleration[i] = newAccel[i];
 }
 
 // Method:  setPosition
@@ -85,11 +75,10 @@ void Atom::setAcceleration(double *newAccel)
 // which has already had memory allocated to it.  It does not
 // take on the values in the array, but the address of the
 // array itself.
-	
-void Atom::setPosition(double *newPos)
-{
-  for(int i = 0; i < 3; i++)
-    position[i] = newPos[i];
+
+void Atom::setPosition(double* newPos) {
+    for (int i = 0; i < 3; i++)
+        position[i] = newPos[i];
 }
 
 // Method:  setVelocity
@@ -108,10 +97,9 @@ void Atom::setPosition(double *newPos)
 // take on the values in the array, but the address of the
 // array itself.
 
-void Atom::setVelocity(double *newV)
-{
-  for(int i = 0; i < 3; i++)
-    velocity[i] = newV[i];
+void Atom::setVelocity(double* newV) {
+    for (int i = 0; i < 3; i++)
+        velocity[i] = newV[i];
 }
 
 // Method:  setHighTimeDerivs
@@ -135,11 +123,10 @@ void Atom::setVelocity(double *newV)
 // take on the values in the array, but the address of the
 // array itself.
 
-void Atom::setHighTimeDerivs(double **newHighTimeDerivs)
-{
-  for(int i = 0; i < 3; i++)
-    for(int j = 0; j < 3; j++)
-      highTimeDerivs[i][j] = newHighTimeDerivs[i][j];
+void Atom::setHighTimeDerivs(double** newHighTimeDerivs) {
+    for (int i = 0; i < 3; i++)
+        for (int j = 0; j < 3; j++)
+            highTimeDerivs[i][j] = newHighTimeDerivs[i][j];
 }
 
 // Method:  setForce
@@ -158,23 +145,20 @@ void Atom::setHighTimeDerivs(double **newHighTimeDerivs)
 // take on the values in the array, but the address of the
 // array itself.
 
-void Atom::setForce(double *newForce)
-{
-   for(int i = 0; i < 3; i++)
-     force[i] = newForce[i];
+void Atom::setForce(double* newForce) {
+    for (int i = 0; i < 3; i++)
+        force[i] = newForce[i];
 }
 
-void Atom::setForce(double fX, double fY, double fZ)
-{
-   force[0] = fX;
-   force[1] = fY;
-   force[2] = fZ;
+void Atom::setForce(double fX, double fY, double fZ) {
+    force[0] = fX;
+    force[1] = fY;
+    force[2] = fZ;
 }
 
-void Atom::setForce(int i, double *newForce)
-{
-   for(int i = 0; i < 3; i++)
-      forceOld[i] = newForce[i];
+void Atom::setForce(int i, double* newForce) {
+    for (int i = 0; i < 3; i++)
+        forceOld[i] = newForce[i];
 }
 
 // Access (Get) Methods
@@ -185,23 +169,17 @@ void Atom::setForce(int i, double *newForce)
 
 // Method: getType
 // Usage: p = getType();
-// ---------------------- 
+// ----------------------
 // Gets the type associated with each atom.
 
-int Atom::getType()
-{
-  return type;
-}
+int Atom::getType() { return type; }
 
 // Method: getMass
 // Usage: n = getMass();
-// --------------------- 
+// ---------------------
 // Get values of the atomic masses.
 
-double Atom::getMass()
-{
-  return mass;
-}
+double Atom::getMass() { return mass; }
 
 // Access (Get) Methods
 // Usage:   n = getXxxxx();
@@ -216,100 +194,78 @@ double Atom::getMass()
 // ---------------------
 // Returns the cut off distances for atom pairs
 
-double **Atom::getrCutOff()
-{
-  return rCutOff;
-}
+double** Atom::getrCutOff() { return rCutOff; }
 
 // Method: getAcceleration
 // Usage: n = getAcceleration();
-// ---------------------------- 
+// ----------------------------
 // Return acceleration of atom
 
-double *Atom::getAcceleration()
-{
-  return acceleration;
-}
+double* Atom::getAcceleration() { return acceleration; }
 
 // Method: getPosition
 // Usage: n = getPosition();
 // -------------------------
 // Return position of atom
 
-double *Atom::getPosition()
-{
-  return position;
-}
+double* Atom::getPosition() { return position; }
 
 // Method: getVelocity
 // Usage: n = getVelosity();
-// ------------------------- 
+// -------------------------
 // Return the velocity of the atom
 
-double *Atom::getVelocity()
-{
-  return velocity;
-}
+double* Atom::getVelocity() { return velocity; }
 
 // Method:  getHighTimeDerivs
 // Usage: n = getHighTimeDerivs();
-// ------------------------------- 
+// -------------------------------
 // Return the derivatives of time
 
-double **Atom::getHighTimeDerivs()
-{
-  return highTimeDerivs;
-}
+double** Atom::getHighTimeDerivs() { return highTimeDerivs; }
 
 // Method:  getForce
 // Usage: n = getForce();
 // ----------------------
 // Returns reference to the force array in the atom object
 
-double *Atom:: getForce()
-{
-  return force;
-}
+double* Atom::getForce() { return force; }
 
 // Constructor:Atom
 // Usage: Atom atom;
-// ----------------- 
+// -----------------
 // Builds the Atom class
 
-Atom::Atom(int theType, double theMass, int dimensions, int derivatives, int num)
-{
-  int i;
-  mass = theMass;
-  type = theType;
-	
-  //allocate memory for the arrays
-  position = new double[dimensions];
-  velocity = new double[dimensions];
-  acceleration = new double[dimensions];
-  force = new double[dimensions];
-  f = new double[dimensions * num];
-  r = new double[dimensions * num];
-  rCutii = new double[num];
-  sigii = new double[num];
-  epsii = new double [num];
-  kind = new int [num];
+Atom::Atom(int theType, double theMass, int dimensions, int derivatives, int num) {
+    int i;
+    mass = theMass;
+    type = theType;
 
-  highTimeDerivs = getMemory(derivatives, dimensions);
+    // allocate memory for the arrays
+    position = new double[dimensions];
+    velocity = new double[dimensions];
+    acceleration = new double[dimensions];
+    force = new double[dimensions];
+    f = new double[dimensions * num];
+    r = new double[dimensions * num];
+    rCutii = new double[num];
+    sigii = new double[num];
+    epsii = new double[num];
+    kind = new int[num];
 
-  //initialise values for acceleration and highTimeDerivs
-  for (i = 0; i < 3; i++)
-  {
-    acceleration[i] = 0.0;
-  }
+    highTimeDerivs = getMemory(derivatives, dimensions);
 
-  for(i = 0; i < 3; i++)
-  {
-     for (int j = 0; j < 3; j++)
-     {
-       highTimeDerivs[i][j] = 0.0;
-      }
-   }
+    // initialise values for acceleration and highTimeDerivs
+    for (i = 0; i < 3; i++) {
+        acceleration[i] = 0.0;
+    }
+
+    for (i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            highTimeDerivs[i][j] = 0.0;
+        }
+    }
 }
 
 // 2nd constructor for array reference construction
-Atom::Atom(){}
+Atom::Atom() {}

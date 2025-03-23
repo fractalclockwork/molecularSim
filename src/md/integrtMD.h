@@ -8,16 +8,15 @@
 
 #include "atomMD.h"
 
-class Integrator
-{
+class Integrator {
   protected:
-    Atom **atoms;
-  public:
-    Integrator(Atom **);                        //constructor for integrator
-    virtual ~Integrator();                      //destructor for integrator
-    virtual void gearPredict(int, double, double) = 0;  // Gear's predictor
-    virtual double gearCorrect(int, double, double) = 0;  // Gear's Corrector
-};
- 
-#endif
+    Atom** atoms;
 
+  public:
+    Integrator(Atom**);                                  // constructor for integrator
+    virtual ~Integrator();                               // destructor for integrator
+    virtual void gearPredict(int, double, double) = 0;   // Gear's predictor
+    virtual double gearCorrect(int, double, double) = 0; // Gear's Corrector
+};
+
+#endif

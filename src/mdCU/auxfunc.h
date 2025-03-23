@@ -6,9 +6,9 @@
 #ifndef _auxfuncMD_h
 #define _auxfuncMD_h
 
-double **getMemory(int num);
-double **getMemory(int xNum, int yNum);
+double** getMemory(int num);
+double** getMemory(int xNum, int yNum);
 int nearestInt(double vector, double boxL);
-double random(int *idum);
- 
+double random(int* idum);
+
 #endif

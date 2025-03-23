@@ -9,10 +9,10 @@
 
 #include "md.h"
 
-class Simulation
-{
+class Simulation {
   private:
-    MolecularDynamics *md;
+    MolecularDynamics* md;
+
   public:
     void readSimParameters();
 };

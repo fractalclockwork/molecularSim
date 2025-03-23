@@ -8,7 +8,7 @@
 // R. J. Sadus, "Molecular Simulation of Fluids: Theory, Algorithms, Object-Orientation,
 // and Parallel Computing," 2nd Ed. (Elsevier, Amsterdam, 2023). It can be used freely for
 // any not for profit purpose or academic research application. The code has been validated,
-// but it would be nonetheless prudent to test it further before publishing any results. 
+// but it would be nonetheless prudent to test it further before publishing any results.
 // Check the book's website for any subsequent updates.
 
 #include "simMD.h"
@@ -21,20 +21,19 @@ using namespace std;
 // Usage:   readSimParameters();
 // -----------------------------
 // Reads in parameters for NVE ensemble
- 
-void Simulation::readSimParameters()
-{
-  int simulation;
-  // open the infile.dat file
-/*
-  ifstream in;
-  in.open("simMD.dat");
 
-  if(in.fail()){
-	 cout << "Cannot open sim.dat!\n";
-	 return;
-  }
-*/
+void Simulation::readSimParameters() {
+    int simulation;
+    // open the infile.dat file
+    /*
+      ifstream in;
+      in.open("simMD.dat");
+
+      if(in.fail()){
+             cout << "Cannot open sim.dat!\n";
+             return;
+      }
+    */
     // Use the DATA_PATH macro defined in CMake
     string dataPath = string(DATA_PATH) + "/simMD.dat";
 
@@ -44,23 +43,22 @@ void Simulation::readSimParameters()
     if (in.fail()) {
         cout << "Cannot open " << dataPath << "!\n";
         return;
-    }  
+    }
 
-  in >> simulation;
-  in.close();
+    in >> simulation;
+    in.close();
 
-  switch(simulation)
-  {
-    case 1:  //molecular dynamics
-      md = new MolecularDynamics();
-      md->run();
-      break;
-    case 2:  //Monte Carlo
-      cout << "Not Yet Implemented" << endl;
-      break;
+    switch (simulation) {
+    case 1: // molecular dynamics
+        md = new MolecularDynamics();
+        md->run();
+        break;
+    case 2: // Monte Carlo
+        cout << "Not Yet Implemented" << endl;
+        break;
     default:
-      cout << "Invalid simulation selected!  Aborting" << endl;
-      break;
-  }
-  return;
+        cout << "Invalid simulation selected!  Aborting" << endl;
+        break;
+    }
+    return;
 }

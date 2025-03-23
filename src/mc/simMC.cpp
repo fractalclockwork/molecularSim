@@ -8,7 +8,7 @@
 // R. J. Sadus, "Molecular Simulation of Fluids: Theory, Algorithms, Object-Orientation,
 // and Parallel Computing," 2nd Ed. (Elsevier, Amsterdam, 2023). It can be used freely for
 // any not for profit purpose or academic research application. The code has been validated,
-// but it would be nonetheless prudent to test it further before publishing any results. 
+// but it would be nonetheless prudent to test it further before publishing any results.
 // Check the book's website for any subsequent updates.
 
 #include "simMC.h"
@@ -22,8 +22,7 @@ using namespace std;
 // -----------------------------
 // Reads in parameters for NVE ensemble
 
-void Simulation::readSimParameters()
-{
+void Simulation::readSimParameters() {
     int simulation;
 
     // Use the DATA_PATH macro defined in CMake
@@ -41,13 +40,13 @@ void Simulation::readSimParameters()
     in.close();
 
     switch (simulation) {
-        case 2: // Monte Carlo
-            mc = new MonteCarlo();
-            mc->run();
-            break;
-        default:
-            cout << "Invalid simulation selected! Aborting." << endl;
-            break;
+    case 2: // Monte Carlo
+        mc = new MonteCarlo();
+        mc->run();
+        break;
+    default:
+        cout << "Invalid simulation selected! Aborting." << endl;
+        break;
     }
     return;
 }

@@ -7,8 +7,8 @@
 #define _auxfuncMC_h
 
 int nearestInt(double vector, double boxL);
-double **getMemory(int num);
-double **getMemory(int xNum, int yNum);
-double random(int *idum);
- 
+double** getMemory(int num);
+double** getMemory(int xNum, int yNum);
+double random(int* idum);
+
 #endif

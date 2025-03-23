@@ -12,16 +12,15 @@
 #include "simMC.h"
 #include <mpi.h>
 
-int main(int argc, char **argv)
-{
-  // Initialise MPI
-  MPI_Init(&argc, &argv); 
+int main(int argc, char** argv) {
+    // Initialise MPI
+    MPI_Init(&argc, &argv);
 
-  Simulation sim;
-  sim.readSimParameters();
-  
-  // End MPI
-  MPI_Finalize();
+    Simulation sim;
+    sim.readSimParameters();
 
-  return 0;
+    // End MPI
+    MPI_Finalize();
+
+    return 0;
 }

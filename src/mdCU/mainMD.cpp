@@ -11,9 +11,8 @@
 
 #include "simMD.h"
 
-int main()
-{
- Simulation sim;
- sim.readSimParameters();
- return 0;
+int main() {
+    Simulation sim;
+    sim.readSimParameters();
+    return 0;
 }

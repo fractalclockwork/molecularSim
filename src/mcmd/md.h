@@ -7,29 +7,28 @@
 #ifndef _md_h_
 #define _md_h_
 
-
-#include "integrtMD.h"
 #include "ensembleMD.h"
+#include "integrtMD.h"
 
-class MolecularDynamics
-{
+class MolecularDynamics {
   private:
-    Ensemble *ensemble;
-    Integrator *integrator;
+    Ensemble* ensemble;
+    Integrator* integrator;
     int theEnsemble, derivatives;
+
   protected:
     int nSize, nEquil, nStep;
-    double tStep; 
+    double tStep;
+
   public:
     MolecularDynamics();
     int getnSize();
     int getnEquil();
     int getnStep();
-    double gettStep(); 
+    double gettStep();
     void runNVE();
     void readInNVE(int);
     void run();
 };
 
 #endif
-
