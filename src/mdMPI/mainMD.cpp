@@ -1,0 +1,26 @@
+// File: mainMD.cpp
+// ________________
+// File containing the main() function for the MD MPI program.
+
+// This code was specifically developed to illustrate concepts in the accompanying book:
+// R. J. Sadus, "Molecular Simulation of Fluids: Theory, Algorithms, Object-Orientation,
+// and Parallel Computing," 2nd Ed. (Elsevier, Amsterdam, 2023). It can be used freely for
+// any not for profit purpose or academic research application. The code has been validated,
+// but it would be nonetheless prudent to test it further before publishing any results. 
+// Check the book's website for any subsequent updates.
+
+#include "simMD.h"
+#include <mpi.h>
+
+int main(int argc, char **argv)
+{
+ // Initialise MPI
+ MPI_Init(&argc,&argv);
+    
+ Simulation sim;
+ sim.readSimParameters();
+
+ // End MPI
+ MPI_Finalize();
+ return 0;
+}
