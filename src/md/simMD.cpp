@@ -26,7 +26,7 @@ void Simulation::readSimParameters()
 {
   int simulation;
   // open the infile.dat file
-
+/*
   ifstream in;
   in.open("simMD.dat");
 
@@ -34,6 +34,17 @@ void Simulation::readSimParameters()
 	 cout << "Cannot open sim.dat!\n";
 	 return;
   }
+*/
+    // Use the DATA_PATH macro defined in CMake
+    string dataPath = string(DATA_PATH) + "/simMD.dat";
+
+    cout << "Attempting to open: " << dataPath << endl;
+
+    ifstream in(dataPath);
+    if (in.fail()) {
+        cout << "Cannot open " << dataPath << "!\n";
+        return;
+    }  
 
   in >> simulation;
   in.close();

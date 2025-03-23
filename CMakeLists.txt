@@ -9,3 +9,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_subdirectory(src/mc)
 add_subdirectory(src/mcMPI)
 add_subdirectory(src/mcCU)
+
+add_subdirectory(src/md)
+add_subdirectory(src/mdMPI)
+add_subdirectory(src/mdCU)
