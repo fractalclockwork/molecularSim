@@ -10,7 +10,8 @@ This project containerizes the build and (MPI and CUDA) runtime environment.
 To use:
 ```
 $ cd docker
-docker$ ./build_image.sh && ./interactive.sh
+docker$ ./build_image.sh && ./interactive.sh # No GPU 
+docker$ ./build_image.sh && ./interactive.sh cuda # Requires nvidia-container-toolkit 
 ...
 root@6e11566453a4:/repo# mkdir -p build && cd build && cmake .. && make
 ...
