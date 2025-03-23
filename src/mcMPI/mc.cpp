@@ -212,7 +212,7 @@ void MonteCarlo::readInNVE(int interPotential)
   Atom *newAtom, **atoms;
 
   // open the NVEfileMC.dat file
-
+/*
   ifstream in;
   in.open("NVEfileMC.dat");
 
@@ -220,6 +220,20 @@ void MonteCarlo::readInNVE(int interPotential)
 	 cout << "Cannot open NVEFileMC.dat!\n";
 	 return;
   }
+*/
+
+    // Use the DATA_PATH macro defined in CMake
+    string dataPath = string(DATA_PATH) + "/NVEfileMC.dat";
+
+    cout << "Attempting to open: " << dataPath << endl;
+
+    ifstream in(dataPath);
+    if (in.fail()) {
+        cout << "Cannot open " << dataPath << "!\n";
+        return;
+    }   
+
+
 
   in >> numComp;
 
@@ -259,11 +273,26 @@ void MonteCarlo::readInNVE(int interPotential)
   // construct array of atoms
   if(interPotential == 1) // Lennard-Jones
   {
+/*
 	in.open("paramLJ.dat");
 	if(in.fail()){
 	  cout << "Cannot open paramLJ.dat!\n";
 	  return;
 	}
+*/
+
+    // Use the DATA_PATH macro defined in CMake
+    string dataPath = string(DATA_PATH) + "/paramLJ.dat";
+
+    cout << "Attempting to open: " << dataPath << endl;
+
+    ifstream in(dataPath);
+    if (in.fail()) {
+        cout << "Cannot open " << dataPath << "!\n";
+        return;
+    }   
+
+
 
 	// assign memory to arrays
 	if(!(atoms = new Atom * [numAtom]))
@@ -403,6 +432,7 @@ void MonteCarlo::run()
 MonteCarlo::MonteCarlo()
 {
   int potential;
+/*
   ifstream in;
 
   in.open("mc.dat");
@@ -412,6 +442,20 @@ MonteCarlo::MonteCarlo()
     cout << "Unable to open mc.dat for MC parameters" << endl;
     return;
   }
+*/
+
+    // Use the DATA_PATH macro defined in CMake
+    string dataPath = string(DATA_PATH) + "/mc.dat";
+
+    cout << "Attempting to open: " << dataPath << endl;
+
+    ifstream in(dataPath);
+    if (in.fail()) {
+        cout << "Cannot open " << dataPath << "!\n";
+        return;
+    }   
+
+
 
   in >> nStep;
   in >> nEquil;
