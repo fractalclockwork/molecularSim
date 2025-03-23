@@ -18,27 +18,12 @@ root@6e11566453a4:/repo/build# ls bin/
 mcCU_simulation  mcMPI_simulation  mc_simulation  mdCU_simulation  mdMPI_simulation  md_simulation
 ```
 
-\[
-\begin{array}{|l|l|l|}
-\hline
-\textbf{Program} & \textbf{Description} & \textbf{Notes} \\
-\hline
-\text{mc} & \text{Serial Monte Carlo program} & \text{Updated to use cmake and common data.} \\
-\hline
-\text{mcMPI} & \text{MPI Monte Carlo program} & \text{None} \\
-\hline
-\text{mcCU} & \text{CUDA Monte Carlo program} & \text{None} \\
-\hline
-\text{mcmd} & \text{Combined serial MC and MD program} & \text{None} \\
-\hline
-\text{md} & \text{Serial molecular dynamics program} & \text{None} \\
-\hline
-\text{mdMPI} & \text{MPI molecular dynamics program} & \text{None} \\
-\hline
-\text{mdCU} & \text{CUDA molecular dynamics program} & \text{None} \\
-\hline
-\end{array}
-\]
-
-
-
+| Program | Description                         | Notes                               |
+|---------|-------------------------------------|-------------------------------------|
+| mc      | Serial Monte Carlo program         | None                                | 
+| mcMPI   | MPI Monte Carlo program            | None                                |
+| mcCU    | CUDA Monte Carlo program           | None                                |
+| mcmd    | Combined serial MC and MD program  | None                                |
+| md      | Serial molecular dynamics program  | None                                |
+| mdMPI   | MPI molecular dynamics program     | None                                |
+| mdCU    | CUDA molecular dynamics program    | None                                |
