@@ -3,11 +3,19 @@
 Based on text and source from:
 Molecular Simulation of Fluids: Theory, Algorithms, Object-Orientation, and Parallel Computing, 2nd Edition by Richard J. Sadus
 
-This project containerizes the build and runtime environment for all examples.
+https://www.elsevier.com/books-and-journals/book-companion/9780323853989
+
+This project containerizes the build and (MPI and CUDA) runtime environment.
 
 To use:
 ```
-
+$ cd docker
+docker$ ./build_image.sh && ./interactive.sh
+...
+root@6e11566453a4:/repo# mkdir -p build && cd build && cmake .. && make
+...
+root@6e11566453a4:/repo/build# ls bin/
+mcCU_simulation  mcMPI_simulation  mc_simulation  mdCU_simulation  mdMPI_simulation  md_simulation
 ```
 
 \[
