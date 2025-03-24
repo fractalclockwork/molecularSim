@@ -1,0 +1,24 @@
+# General simulation configuration
+[simulation]
+choice = 1 # Simulation choice
+
+[molecular_dynamics]
+total_time_steps = 8000          # Total number of time steps
+equilibration_time_steps = 6000  # Number of equilibration time steps
+block_size = 10                  # Size of blocks to average
+time_step = 0.002                # Time step
+integrator_method = "Gear"       # Integrator method (1 = Gear)
+gear_values = 5                  # Number of Gear values
+
+[ensemble]
+type = "NVE"                     # Ensemble type (1 = NVE ensemble)
+potential = "Lennard-Jones"      # Potential type (1 = Lennard-Jones)
+components = 1                   # Number of components
+atoms = 256                      # Number of atoms
+mole_fraction = 1.0              # Mole fraction for each type of atom
+mass = 1.0                       # Mass of each type of atom
+temperature = 1.5                # Temperature
+density = 0.6                    # Density
+epsilon = 1.0                    # Epsilon
+sigma = 1.0                      # Sigma
+rcut = 3.4                       # Cutoff radius

@@ -12,8 +12,9 @@
 // Check the book's website for any subsequent updates.
 
 #include "simMC.h"
-#include <fstream>
+
 #include <iostream>
+#include <toml++/toml.h>
 
 using namespace std;
 
@@ -25,28 +26,44 @@ using namespace std;
 void Simulation::readSimParameters() {
     int simulation;
 
-    // Use the DATA_PATH macro defined in CMake
-    string dataPath = string(DATA_PATH) + "/simMC.dat";
+    // Path to the TOML configuration file
+    std::string configPath = std::string(DATA_PATH) + "/config_mc.toml";
 
-    cout << "Attempting to open: " << dataPath << endl;
+    cout << "Attempting to parse: " << configPath << endl;
 
-    ifstream in(dataPath);
-    if (in.fail()) {
-        cout << "Cannot open " << dataPath << "!\n";
-        return;
+    try {
+        // Parse the TOML file
+        auto config = toml::parse_file(configPath);
+
+        // Read the simulation choice
+        simulation = config["simulation"]["choice"].value_or(0);
+        if (simulation <= 0) {
+            std::cerr << "Invalid simulation choice in configuration!" << endl;
+            return;
+        }
+
+        // Process the selected simulation type
+        switch (simulation) {
+        case 2: // Monte Carlo
+            mc = new MonteCarlo(); // Instantiate Monte Carlo object
+            mc->run();             // Run Monte Carlo simulation
+            break;
+
+        // Placeholder for additional simulation types
+        // case 3: ...
+        // case 4: ...
+
+        default:
+            cout << "Invalid simulation selected! Aborting." << endl;
+            break;
+        }
+    } catch (const toml::parse_error& err) {
+        // Handle TOML parsing errors
+        std::cerr << "Error parsing TOML file: " << err << std::endl;
+    } catch (const std::exception& e) {
+        // Handle other unexpected errors
+        std::cerr << "Unexpected error: " << e.what() << std::endl;
     }
 
-    in >> simulation;
-    in.close();
-
-    switch (simulation) {
-    case 2: // Monte Carlo
-        mc = new MonteCarlo();
-        mc->run();
-        break;
-    default:
-        cout << "Invalid simulation selected! Aborting." << endl;
-        break;
-    }
     return;
 }

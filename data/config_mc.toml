@@ -1,0 +1,23 @@
+# General simulation configuration
+[simulation]
+choice = 2 # Simulation choice
+
+[monte_carlo]
+total_cycles = 8000         # Total number of cycles
+equilibration_cycles = 2000 # Number of equilibration cycles
+block_size = 10             # Size of blocks to average
+
+[ensemble]
+type = "NVE"                # Ensemble type (1 = NVE ensemble)
+potential = "Lennard-Jones" # Potential type (1 = Lennard-Jones)
+components = 1              # Number of components
+atoms = 256                 # Number of atoms
+mole_fraction = 1.0         # Mole fraction for each type of atom
+mass = 1.0                  # Mass of each type of atom
+
+[results]
+total_energy = -1.6088      # Total energy of the ensemble
+density = 0.6               # Density of the ensemble
+epsilon = 1.0               # Epsilon
+sigma = 1.0                 # Sigma
+rcut = 3.4                  # Cutoff radius

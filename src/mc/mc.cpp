@@ -18,6 +18,8 @@
 #include <iostream>
 #include <math.h>
 
+#include <toml++/toml.h>
+
 using namespace std;
 
 void MonteCarlo::runNVE() {
@@ -173,178 +175,134 @@ void MonteCarlo::runNVE() {
         erTemperature += pow((accumTemp[i] - avTemperature), 2);
     }
 
-    out << "Average Potential Energy/N:\t" << avPotEnergy / num << " +/-  "
+    out << "Average Potential Energy/N:\t" << avPotEnergy / num << " +/- "
         << sqrt(erPotEnergy) / (num * nTotal) << endl;
-    out << "Average Kinetic Energy/N:\t " << avKinEnergy / num << " +/-  "
+    out << "Average Kinetic Energy/N:\t " << avKinEnergy / num << " +/- "
         << sqrt(erKinEnergy) / (num * nTotal) << endl;
-    out << "Average Total Energy/N:\t\t" << avTotEnergy / num << "  +/-  "
+    out << "Average Total Energy/N:\t\t" << avTotEnergy / num << "  +/- "
         << sqrt(erTotEnergy) / (num * nTotal) << endl;
-    out << "Average Temperature:\t\t " << avTemperature << "  +/-  " << sqrt(erTemperature) / nTotal
+    out << "Average Temperature:\t\t " << avTemperature << "  +/- " << sqrt(erTemperature) / nTotal
         << endl;
     out << "Acceptance Rate:\t\t " << 100 * tally << " %" << endl;
     out.close();
 }
 
-// Method: readInNVE
-// Usage: readInNVE();
-// -------------------
-// ReadIn reads-in the NVE ensemble settings from the
-// NVEfileMC.dat data file.
-
 void MonteCarlo::readInNVE(int interPotential) {
     int i, j;
-    double numType, *molFract, **epsilon, **sigma, **rCut, potE, density;
+    double *molFract, **epsilon, **sigma, **rCut, potE, density;
     int dimensions = 3, numComp, numAtom, *comp;
     Atom *newAtom, **atoms;
 
-    /*
-    // open the NVEfileMC.dat file
-    ifstream in;
-    in.open("NVEfileMC.dat");
+    std::string configPath = std::string(DATA_PATH) + "/config_mc.toml";
 
-    if(in.fail()){
-           cout << "Cannot open NVEFileMC.dat!\n";
-           return;
-    }
-    */
+    try {
+        auto config = toml::parse_file(configPath);
 
-    // Use the DATA_PATH macro defined in CMake
-    string dataPath = string(DATA_PATH) + "/NVEfileMC.dat";
-
-    cout << "Attempting to open: " << dataPath << endl;
-
-    ifstream in(dataPath);
-    if (in.fail()) {
-        cout << "Cannot open " << dataPath << "!\n";
-        return;
-    }
-
-    in >> numComp;
-
-    if (numComp <= 0) {
-        cout << "Number of components must be > 0!\n";
-        return;
-    }
-
-    comp = new int[numComp];
-
-    in >> numAtom;
-
-    if (numAtom < 4) {
-        cout << "At least 4 atoms are required!\n";
-        return;
-    }
-
-    if (!(molFract = new double[numComp])) {
-        cout << "Cannot allocate memory to molFract" << endl;
-        return;
-    }
-    for (i = 0; i < numComp; i++)
-        in >> molFract[i];
-
-    double* mass = new double[numComp];
-
-    for (i = 0; i < numComp; i++)
-        in >> mass[i];
-
-    in >> potE;
-    in >> density;
-
-    // Convert potE per particle to the total ensemble value
-    potE *= numAtom;
-
-    in.close();
-
-    // construct array of atoms
-    if (interPotential == 1) // Lennard-Jones
-    {
-        /*
-            in.open("paramLJ.dat");
-            if(in.fail()){
-              cout << "Cannot open paramLJ.dat!\n";
-              return;
-            }
-        */
-
-        // Use the DATA_PATH macro defined in CMake
-        string dataPath = string(DATA_PATH) + "/paramLJ.dat";
-
-        cout << "Attempting to open: " << dataPath << endl;
-
-        ifstream in(dataPath);
-        if (in.fail()) {
-            cout << "Cannot open " << dataPath << "!\n";
+        // Read number of components
+        numComp = config["ensemble"]["components"].value_or(0);
+        if (numComp <= 0) {
+            std::cerr << "Number of components must be > 0!" << std::endl;
             return;
         }
 
-        // assign memory to arrays
-        if (!(atoms = new Atom*[numAtom])) {
-            cout << "Cannot allocate memory to atoms!\n";
+        // Allocate memory for components
+        comp = new int[numComp];
+
+        // Read number of atoms
+        numAtom = config["ensemble"]["atoms"].value_or(0);
+        if (numAtom < 4) {
+            std::cerr << "At least 4 atoms are required!" << std::endl;
             return;
         }
 
-        epsilon = getMemory(numComp);
-        sigma = getMemory(numComp);
-        rCut = getMemory(numComp);
-
+        // Allocate memory and read mole_fraction
+        molFract = new double[numComp];
+        double moleFractionValue = config["ensemble"]["mole_fraction"].value_or(0.0);
+        if (moleFractionValue <= 0.0 || moleFractionValue > 1.0) {
+            std::cerr << "Invalid mole fraction value!" << std::endl;
+            return;
+        }
         for (i = 0; i < numComp; i++) {
-            for (j = 0; j < numComp; j++) {
-                in >> epsilon[i][j] >> sigma[i][j] >> rCut[i][j];
+            molFract[i] = moleFractionValue; // Use the same value for all components
+        }
 
-                // adjust for indistinguishable pairs
-                if (j != i) {
-                    epsilon[j][i] = epsilon[i][j];
-                    sigma[j][i] = sigma[i][j];
-                    rCut[j][i] = rCut[i][j];
+        // Allocate memory and read mass
+        double* mass = new double[numComp];
+        double massValue = config["ensemble"]["mass"].value_or(0.0);
+        if (massValue <= 0.0) {
+            std::cerr << "Invalid mass value!" << std::endl;
+            return;
+        }
+        for (i = 0; i < numComp; i++) {
+            mass[i] = massValue; // Use the same value for all components
+        }
+
+        // Read total energy and density
+        potE = config["results"]["total_energy"].value_or(0.0);
+        density = config["results"]["density"].value_or(0.0);
+        potE *= numAtom;
+
+        if (interPotential == 1) { // Lennard-Jones potential
+            double epsilonValue = config["results"]["epsilon"].value_or(0.0);
+            double sigmaValue = config["results"]["sigma"].value_or(0.0);
+            double rCutValue = config["results"]["rcut"].value_or(0.0);
+
+            if (epsilonValue <= 0.0 || sigmaValue <= 0.0 || rCutValue <= 0.0) {
+                std::cerr << "Invalid Lennard-Jones parameters!" << std::endl;
+                return;
+            }
+
+            // Allocate memory for interaction parameters
+            epsilon = getMemory(numComp);
+            sigma = getMemory(numComp);
+            rCut = getMemory(numComp);
+
+            for (i = 0; i < numComp; i++) {
+                for (j = 0; j < numComp; j++) {
+                    epsilon[i][j] = epsilonValue;
+                    sigma[i][j] = sigmaValue;
+                    rCut[i][j] = rCutValue;
+
+                    // Adjust for indistinguishable pairs
+                    if (j != i) {
+                        epsilon[j][i] = epsilon[i][j];
+                        sigma[j][i] = sigma[i][j];
+                        rCut[j][i] = rCut[i][j];
+                    }
+                }
+            }
+
+            // Allocate and initialize atoms
+            atoms = new Atom*[numAtom];
+            int* atnum = new int[numComp + 1];
+            atnum[0] = 0;
+
+            // Calculate the number of atoms of each type from the mole fraction
+            for (i = 0; i < numComp; i++) {
+                double numType = numAtom * molFract[i];
+                int rem = static_cast<int>(numType);
+                atnum[i + 1] = (numType - rem >= 0.5) ? rem + 1 : rem;
+            }
+
+            while (atnum[numComp] < numAtom) atnum[numComp]++;
+            for (i = 0; i < numComp; i++) atnum[i + 1] += atnum[i];
+
+            for (i = 0; i < numComp; i++) {
+                for (int j = atnum[i]; j < atnum[i + 1]; j++) {
+                    newAtom = new LJatom(i, mass[i], epsilon, sigma, rCut, dimensions);
+                    atoms[j] = newAtom;
                 }
             }
         }
 
-        // close input file
-        in.close();
+        // Create the NVE ensemble
+        ensemble = new NVEensemble(atoms, numComp, numAtom, potE, density, molFract, comp);
 
-        int* atnum = new int[numComp + 1];
-        atnum[0] = 0;
-
-        // calculate the numebr of atoms of each type from the molFract
-        for (i = 0; i < numComp; i++) {
-            numType = numAtom * molFract[i];
-            int rem = (int)numType;
-
-            if ((numType - rem) >= .5)
-                atnum[i + 1] = (int)numType + 1;
-            else
-                atnum[i + 1] = (int)numType;
-        }
-
-        int sum = 0;
-        for (i = 0; i <= numComp; i++)
-            sum += atnum[i];
-
-        while (atnum[numComp] < numAtom)
-            atnum[numComp]++;
-
-        for (i = 0; i < numComp; i++)
-            atnum[i + 1] += atnum[i];
-
-        // loop through the number of components
-        for (i = 0; i < numComp; i++) {
-            // loop through the number of atoms of that type
-            for (int j = atnum[i]; j < atnum[i + 1]; j++) {
-                // create atom(s) and assign mass, type, sigma, epsilon, and rCut
-                //(derivatives - 2) because acceleration and velocity are stored
-                // separately from the higher derivatives of time
-                newAtom = new LJatom(i, mass[i], epsilon, sigma, rCut, dimensions);
-
-                // store reference to atom in array
-                atoms[j] = newAtom;
-            }
-        }
-    } // end of Lennard-Jones atom array creation
-
-    ensemble = new NVEensemble(atoms, numComp, numAtom, potE, density, molFract, comp);
-
-    return;
+    } catch (const toml::parse_error& err) {
+        std::cerr << "Error parsing TOML file: " << err << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "Unexpected error: " << e.what() << std::endl;
+    }
 }
 
 // Method: getnSize()
@@ -391,7 +349,7 @@ void MonteCarlo::run() {
 // Accesses parameter file mc.dat, which identifies the choice of
 // the choice of intermolecular potential, and ensemble, and
 // constructs the MonteCarlo object.
-
+/*
 MonteCarlo::MonteCarlo() {
     int potential;
     // ifstream in;
@@ -424,5 +382,49 @@ MonteCarlo::MonteCarlo() {
         readInNVE(potential);
         break;
         // other ensembles here
+    }
+}
+*/
+
+MonteCarlo::MonteCarlo() {
+    int potential;
+    // Path to the TOML configuration file
+    std::string configPath = std::string(DATA_PATH) + "/config_mc.toml";
+
+    std::cout << "Attempting to parse: " << configPath << std::endl;
+
+    try {
+        // Parse the TOML file
+        auto config = toml::parse_file(configPath);
+
+        // Read Monte Carlo parameters
+        nStep = config["monte_carlo"]["total_cycles"].value_or(0);
+        nEquil = config["monte_carlo"]["equilibration_cycles"].value_or(0);
+        nSize = config["monte_carlo"]["block_size"].value_or(0);
+
+        // Read ensemble and potential type
+        std::string ensembleType = config["ensemble"]["type"].value_or("");
+        std::string potentialType = config["ensemble"]["potential"].value_or("");
+
+        if (ensembleType.empty() || potentialType.empty()) {
+            std::cerr << "Missing or invalid ensemble or potential type in configuration!" << std::endl;
+            return;
+        }
+
+        if (ensembleType == "NVE" && potentialType == "Lennard-Jones") {
+            theEnsemble = 1; // Map "NVE" to 1  (global... FIXME)
+            potential = 1;   // Map "Lennard-Jones" to 1
+            readInNVE(potential); // Read NVE-specific settings
+        } else {
+            std::cerr << "Unsupported ensemble or potential type: "
+                      << "Ensemble = " << ensembleType
+                      << ", Potential = " << potentialType << std::endl;
+        }
+    } catch (const toml::parse_error& err) {
+        // Handle TOML parsing errors
+        std::cerr << "Error parsing TOML file: " << err << std::endl;
+    } catch (const std::exception& e) {
+        // Handle other unexpected errors
+        std::cerr << "Unexpected error: " << e.what() << std::endl;
     }
 }
